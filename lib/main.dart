@@ -31,9 +31,9 @@ final GoRouter _router = GoRouter(
           },
           routes: [
             GoRoute(
-                path: 'subdetails',
+                path: 'subdetails/:text',
                 builder: (BuildContext context, GoRouterState state) {
-                  return const SubDetailsScreen();
+                  return SubDetailsScreen(state.params['text'].toString());
                 }
             )
           ]
@@ -98,7 +98,7 @@ class DetailsScreen extends StatelessWidget {
               child: const Text('Go back to the Home screen'),
             ),
             ElevatedButton(
-              onPressed: () => context.go('/details/subdetails'),
+              onPressed: () => context.go('/details/subdetails/Hello'),
               child: const Text('Go to sub Detail'),
             ),
           ],
@@ -109,8 +109,8 @@ class DetailsScreen extends StatelessWidget {
 }
 /// The details screen
 class SubDetailsScreen extends StatelessWidget {
-  /// Constructs a [DetailsScreen]
-  const SubDetailsScreen({Key? key}) : super(key: key);
+  final String textFromRouter;
+  const SubDetailsScreen(this.textFromRouter, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +119,8 @@ class SubDetailsScreen extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <ElevatedButton>[
+          children: [
+            Text(textFromRouter),
             ElevatedButton(
               onPressed: () => context.go('/'),
               child: const Text('Go back to the Home screen'),
